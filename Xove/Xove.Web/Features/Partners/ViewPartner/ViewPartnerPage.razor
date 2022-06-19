@@ -1,0 +1,69 @@
+﻿@page "/viewpartner/{partnerid:guid}"
+@using MediatR
+@using Xove.Shared.Features.Partners
+@inject IMediator _mediator
+@inject NavigationManager _navigationManager
+@inject IDialogService _dialogService
+
+
+<div class="d-flex justify-space-between align-center pa-2">
+    <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.ArrowBack" OnClick="NavigateBack" />
+</div>
+@if (_partner == null)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+else
+{
+    <EpiViewLayout>
+        <EpiViewMain>
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText><h1><strong>@_partner.FullName,</strong> @_partner.Age</h1></MudText>
+                        <MudText><MudIcon Icon="@Icons.Material.Filled.Work" Size="Size.Small" /> @_partner.CurrentPosition</MudText>
+                        <MudText><MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Small" /> @_partner.SexualOrientation @_partner.Gender</MudText>
+                    <MudText><MudIcon Icon="@Icons.Material.Filled.Home" Size="Size.Small" /> Lives in @_partner.Location</MudText>
+                    <MudText><MudIcon Icon="@Icons.Material.Filled.SportsBasketball" Size="Size.Small" /> Interested in @_partner.Interests</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText>@_partner.ShortBiography</MudText>
+                </MudCardContent>
+            </MudCard>
+        </EpiViewMain>
+        <EpiViewSide>
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText>Actions</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardActions>
+                    <MudButton StartIcon="@Icons.Material.Filled.Edit" OnClick="Edit">Edit</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </EpiViewSide>
+    </EpiViewLayout>
+}
+
+@code {
+    private ViewPartnerDto _partner;
+
+    [Parameter] public Guid PartnerId { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        _partner = (await _mediator.Send(new ViewPartnerRequest(PartnerId))).Partner;
+    }
+
+    private void NavigateBack()
+    {
+        _navigationManager.NavigateTo("/");
+    }
+
+    private void Edit()
+    {
+        _navigationManager.NavigateTo($"/editpartner/{PartnerId}");
+    }
+}

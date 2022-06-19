@@ -1,0 +1,35 @@
+﻿@page "/info"
+@inject NavigationManager _navigationManager
+
+<MudText Typo="Typo.h3"><b>Xove</b></MudText>
+<MudText Typo="Typo.h5"><i>Gender Inclusive, LGBTQIA+ Friendly and Diverse Dating App</i></MudText>
+
+<MudPaper Class="pa-4 mt-3 mb-3">
+    <MudText><b>Version: </b>1.0 </MudText>
+    <MudText><b>Release Date: </b>June 16th 2022, Thursday </MudText>
+    <MudText><b>Created by: </b>Deniz K. Acikbas </MudText>
+    <MudChip>Asp.Net</MudChip>
+    <MudChip>Blazor</MudChip>
+    <MudChip>Microsoft SQL Server</MudChip>
+    <MudChip>RepoDb</MudChip>
+    <MudChip>Visual Studio</MudChip>
+    <MudChip>Templates</MudChip>
+</MudPaper>
+
+<MudButton OnClick="GitHubPage"
+           Target="_blank"
+           Variant="Variant.Filled"
+           EndIcon="@Icons.Custom.Brands.GitHub"
+           Color="Color.Primary"
+           Disabled=@disabled>
+   Download Source Code from GitHub
+</MudButton>
+
+@code {
+    bool disabled = false;
+
+    private void GitHubPage()
+    {
+        _navigationManager.NavigateTo("https://github.com/denizkarya1999");
+    }
+}

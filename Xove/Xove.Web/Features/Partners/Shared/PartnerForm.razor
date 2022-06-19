@@ -1,0 +1,102 @@
+﻿@using Xove.Web.Helpers
+@using Xove.Shared
+@using Xove.Shared.Features.Partners
+@inject ISnackbar Snackbar
+
+@if (_partner != null)
+{
+<EditForm Model="@_partner" OnValidSubmit="HandleSubmitAsync">
+    <FluentValidationValidator />
+    <ServerSideValidator @ref="_serverSideValidator" />
+    <MudText Typo="Typo.h6">@_transactionMode</MudText>
+    <EpiFormLayout>
+        <EpiFormBody>
+            <MudTextField @bind-Value="_partner.FullName" Label="Full Name" Variant="Variant.Text" Margin="Margin.Normal"
+                          For="@(()=> _partner.FullName)"></MudTextField>
+            <MudTextField @bind-Value="_partner.Age" Label="Age" Variant="Variant.Text" Margin="Margin.Normal"
+                          For="@(()=> _partner.Age)"></MudTextField>
+            <MudSelect @bind-Value="_partner.Gender" T="string" Label="Gender" Variant="Variant.Text">
+                          <MudSelectItem Value="@("Man")" />
+                          <MudSelectItem Value="@("Cis Man")" />
+                          <MudSelectItem Value="@("Trans Man")" />
+                          <MudSelectItem Value="@("Woman")" />
+                          <MudSelectItem Value="@("Cis Woman")" />
+                          <MudSelectItem Value="@("Trans Woman")" />
+                          <MudSelectItem Value="@("Non-binary")" />
+                          <MudSelectItem Value="@("Intersex")" />
+                          <MudSelectItem Value="@("Gender not listed here")" />
+                          <MudSelectItem Value="@("Prefer not to say")" /></MudSelect>
+            <MudSelect @bind-Value="_partner.SexualOrientation" T="string" Label="Sexual Orientation" Variant="Variant.Text">
+                          <MudSelectItem Value="@("Asexual")" />
+                          <MudSelectItem Value="@("Bisexual")" />
+                          <MudSelectItem Value="@("Gay")" />
+                          <MudSelectItem Value="@("Lesbian")" />
+                          <MudSelectItem Value="@("Straight")" />
+                          <MudSelectItem Value="@("Pansexual")" />
+                          <MudSelectItem Value="@("Queer")" />
+                          <MudSelectItem Value="@("Sexual orientation not listed here")" />
+                          <MudSelectItem Value="@("Prefer not to say")" /></MudSelect>
+            <MudTextField @bind-Value="_partner.CurrentPosition" Label="Current Position" Variant="Variant.Text" Margin="Margin.Normal"
+                          For="@(()=> _partner.CurrentPosition)"></MudTextField>
+            <MudTextField @bind-Value="_partner.Location" Label="Location" Variant="Variant.Text" Margin="Margin.Normal"
+                          For="@(()=> _partner.Location)"></MudTextField>
+            <MudTextField @bind-Value="_partner.Interests" Label="Interests and Hobbies" Variant="Variant.Text" Margin="Margin.Normal"
+                          For="@(()=> _partner.Interests)"></MudTextField>
+            <MudTextField @bind-Value="_partner.ShortBiography" Label="Biography" Variant="Variant.Text" Margin="Margin.Normal"
+                          For="@(()=> _partner.ShortBiography)"></MudTextField>
+        </EpiFormBody>
+        <EpiFormActions>
+            @if (_isEditing)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="Delete">Delete</MudButton>
+            }
+
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="Cancel" Class="ml-4" Disabled="IsProcessing">Cancel</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-2" Disabled="IsProcessing" @onclick="@(() => Snackbar.Add("Operation completed successfully", Severity.Success))">Save</MudButton>
+        </EpiFormActions>
+    </EpiFormLayout>
+</EditForm>
+}
+
+@code {
+
+    private ServerSideValidator _serverSideValidator;
+    private bool _isEditing = false;
+    private string _transactionMode = "Adding a Potential Partner";
+    private PartnerFormModel _partner = new PartnerFormModel();
+
+    [Parameter] public PartnerFormModel Partner { get; set; }
+    [Parameter] public bool IsProcessing { get; set; } = false;
+    [Parameter] public CommandResponse CommandResponse { get; set; }
+    [Parameter] public Action OnCancel { get; set; }
+    [Parameter] public Func<Guid, Task> OnDelete { get; set; }
+    [Parameter] public Func<PartnerFormModel, Task> OnSubmit { get; set; }
+
+    private async Task HandleSubmitAsync() => await OnSubmit(_partner);
+    private void Cancel() => OnCancel();
+    private void Delete() => OnDelete(_partner.Id);
+
+    protected override void OnParametersSet()
+    {
+        if (Partner != null)
+        {
+            _partner.Id = Partner.Id;
+            _partner.FullName = Partner.FullName;
+            _partner.Age = Partner.Age;
+            _partner.Gender = Partner.Gender;
+            _partner.SexualOrientation = Partner.SexualOrientation;
+            _partner.CurrentPosition = Partner.CurrentPosition;
+            _partner.Location = Partner.Location;
+            _partner.Interests = Partner.Interests;
+            _partner.ShortBiography = Partner.ShortBiography;
+
+            _isEditing = true;
+            _transactionMode = "Editing a Potential Partner";
+        }
+
+        if (CommandResponse != null && !CommandResponse.IsSuccessful)
+        {
+            _serverSideValidator.DisplayErrors(CommandResponse.Errors);
+        }
+    }
+}

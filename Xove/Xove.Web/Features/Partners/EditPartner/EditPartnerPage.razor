@@ -1,0 +1,89 @@
+﻿@page "/editpartner/{partnerid:guid}"
+@using MediatR
+@using Xove.Web.Features.Partners.Shared
+@using Xove.Web.Helpers
+@using Xove.Shared
+@using Xove.Shared.Features.Partners
+@inject IMediator _mediator
+@inject NavigationManager _navigationManager
+@inject IDialogService _dialogService
+@inject ISnackbar Snackbar
+
+@if (_isProcessing)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+
+@if (_isLoading)
+{
+    <MudPaper Elevation="25">
+        <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+        <MudText Color="Color.Info" Typo="Typo.body1"> Loading partner... </MudText>
+    </MudPaper>
+}
+else
+{
+     <MudPaper Class="pa-4 mt-3 mb-3">
+            <MudAvatar Size="Size.Large" Color="Color.Primary">@_partner.FullName.Substring(0, 1)</MudAvatar>
+                <MudText Typo="Typo.body1">@_partner.FullName</MudText>
+                <MudText Typo="Typo.body2">@_partner.Id</MudText>
+    </MudPaper>
+     <MudPaper Elevation="25" Class="pa-4">
+        <PartnerForm Partner="_partner" OnSubmit="Submit" OnCancel="NavigateToList" OnDelete="DeleteAsync"
+                    CommandResponse="_commandResponse" IsProcessing="_isProcessing">
+        </PartnerForm>
+    </MudPaper>
+}
+
+@code {
+    private bool _isLoading;
+    private bool _isProcessing = false;
+    private PartnerFormModel _partner = new PartnerFormModel();
+    private CommandResponse _commandResponse;
+
+    [Parameter] public Guid PartnerId { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        _isLoading = true;
+        _partner = (await _mediator.Send(new GetPartnerRequest(PartnerId))).Partner;
+        _isLoading = false;
+    }
+
+    private async Task Submit(PartnerFormModel partner)
+    {
+        _isProcessing = true;
+        StateHasChanged();
+
+        _commandResponse = await _mediator.Send(new EditPartnerRequest(partner));
+
+        _isProcessing = false;
+
+        if (_commandResponse.IsSuccessful)
+        {
+            NavigateToList();
+        }
+        else
+        {
+            StateHasChanged();
+        }
+    }
+
+    private async Task DeleteAsync(Guid partnerId)
+    {
+        if ((await _dialogService.ShowMessageBox("Delete", "Are you sure?", yesText: "Delete", cancelText: "Cancel")).Value)
+        {
+             _isProcessing = true;
+            await _mediator.Send(new DeletePartnerRequest(_partner.Id));
+             _isProcessing = false;
+           
+             NavigateToList();
+             Snackbar.Add("Operation completed successfully", Severity.Success);
+        }
+    }
+
+    private void NavigateToList()
+    {
+        _navigationManager.NavigateTo("/");
+    }
+}

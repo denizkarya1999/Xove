@@ -1,0 +1,16 @@
+﻿<MudGrid Class="d-flex flex-column-reverse flex-sm-row">
+    <MudItem xs="12" sm="9">
+        @EpiViewMain
+    </MudItem>
+    <MudItem xs="12" sm="3">
+        @EpiViewSide
+    </MudItem>
+</MudGrid>
+
+@code {
+    [Parameter]
+    public RenderFragment EpiViewMain{ get; set; }
+
+    [Parameter]
+    public RenderFragment EpiViewSide { get; set; }
+}

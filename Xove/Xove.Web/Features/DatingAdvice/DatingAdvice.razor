@@ -1,0 +1,129 @@
+﻿@page "/datingadvice"
+
+<MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true" Color="@Color.Secondary" PanelClass="pa-4 mt-3">
+    <MudTabPanel Text="First Date">
+        <MudText>Get to know them</MudText>
+        <li>Meet with your date in a nice place</li>
+        <li>Don`t hesitate to hold hands if you feel comfortable</li>
+        <li>Don`t bring up boring conversations. Enjoy the day with your date</li>
+        <li>You may kiss your date if you feel comfortable</li>
+    </MudTabPanel>
+    <MudTabPanel Text="Second Date">
+        <MudText>Test their intimacy</MudText>
+        <li>After meeting in public, invite your date to your house</li>
+        <li>Select a movie or open Netflix and watch with your date</li>
+        <li>You can make out with your partner and say romantic things</li>
+    </MudTabPanel>
+    <MudTabPanel Text="Third Date">
+        <MudText>Test their feelings</MudText>
+        <li>Have a nice time with your date</li>
+        <li>If they feel comfortable, say that you love them</li>
+    </MudTabPanel>
+</MudTabs>
+
+<MudPaper Class="pa-4 mt-3 mb-3" Style="@($"color:{Theme.Palette.White}; background:{Colors.Pink.Default};")" Outlined="true">
+    <MudText>Essential Rules For Dating</MudText>
+    <MudExpansionPanels MultiExpansion="true" Class="pa-4 mb-3">
+    <MudExpansionPanel Text="Put Yourself Out There">
+        We know meeting people can be stressful, but try to overcome any negative emotions you have surrounding dating 
+        because the more you put yourself out there, the better your chances are to meet someone you really like. 
+        If you're not into dating apps, try a different avenue, like asking your friends to fix you up. 
+        You could even scope the scene at your favorite places, which increases your odds of finding someone with shared interests. 
+        So if you love yoga, see if you find anyone in the class attractive and talk to them afterward.
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Keep an Open Mind">
+        Being open-minded is perhaps the most important rule on this list. You may think you have a type, which has inadvertently closed you 
+        off to meeting someone you could fall in love with. 
+        Just because someone has different interests than you or isn't your typical "go-to" doesn't mean that you should automatically write
+        them off as someone you wouldn't be interested in. 
+        After all, what do you have to lose by giving someone a chance?
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Stay Safe">
+        Another thing to keep in mind: your safety is the most important when dating. If you don't feel comfortable or
+        safe, do not worry about staying to be polite. Definitely get out of there.﻿ If you're meeting up with someone from a dating app (a stranger), 
+        we recommend letting a friend know where you are, meeting your date in a public place, and staying clearheaded, 
+        so that you can make good choices from start to finish.
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Set Your Own Pace">
+        When you're dating someone new, it's important to move the relationship forward at your own pace. We don't necessarily subscribe to society's 
+        long-standing and unspoken rule of waiting a specific amount of time before being intimate with your new partner, 
+        but we do believe that waiting is okay if you aren't completely sure that intimacy is something you're ready for yet.
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Remember: Forming Connections Takes Time">
+        Speaking of setting your own pace, take some of the stress off yourself and remember that finding the perfect person for you won’t happen overnight. 
+        So rather than rushing the
+        process and settling on a partner who doesn’t meet all of your needs, it’s in your best interest 
+        to put in the time it takes to date more people and up your chances of finding the one who makes you happiest. 
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Maintain a Positive Attitude">
+        We get it, you can't be positive all the time. However, when it comes to dating, try your best to keep any negativity at bay because 
+        if you go on a first date thinking it will be a disaster, it probably will be. Think of it this way: If you go out for 
+        drinks with someone you weren't that into, it was just two or so hours of your life, right? However, 
+        if you're on your way to a first date thinking, "I'm going to laugh a lot, order my favorite cocktail, and have a great time even if there's no second date," you'll have plenty of fun. 
+        The power of positive thinking is definitely real.
+    </MudExpansionPanel>
+</MudExpansionPanels>
+</MudPaper>
+
+<MudPaper Class="pa-4 mt-3 mb-3" Outlined="true">
+    <MudText>Third Date Rule Quiz</MudText>
+<MudDropContainer T="DropItem" Items="_items" ItemsSelector="@((item,dropzone) => item.Place == dropzone)" ItemDropped="ItemUpdated" Class="d-flex flex-column flex-grow-1">
+    <ChildContent>
+        <div class="d-flex flex-wrap justify-space-between">
+            <MudDropZone T="DropItem" Identifier="FirstDate" CanDrop="@((item) => item.Type == ItemType.FirstDate)" Class="rounded-lg mud-alert-text-info pa-4 ma-4 flex-grow-1">
+                <MudText Typo="Typo.button" Class="ma-2">First Date</MudText>
+            </MudDropZone>
+            <MudDropZone T="DropItem" Identifier="SecondDate" CanDrop="@((item) => item.Type == ItemType.SecondDate)" Class="rounded-lg mud-alert-text-warning pa-4 ma-4 flex-grow-1">
+                <MudText Typo="Typo.button" Class="ma-2">Second Date</MudText>
+            </MudDropZone>
+            <MudDropZone T="DropItem" Identifier="ThirdDate" CanDrop="@((item) => item.Type == ItemType.ThirdDate)" Class="rounded-lg mud-alert-text-success pa-4 ma-4 flex-grow-1">
+                <MudText Typo="Typo.button" Class="ma-2">Third Date</MudText>
+            </MudDropZone>
+        </div>
+        <MudDropZone T="DropItem" Identifier="Romance" CanDrop="@((item) => false)" Class="rounded-lg mud-alert-text-normal pa-4 mt-6 mx-4 flex-grow-1 d-flex flex-wrap"/>
+    </ChildContent>
+    <ItemRenderer>
+        <MudPaper Elevation="25" Class="pa-4 ma-2">@context.Name</MudPaper>
+    </ItemRenderer>
+</MudDropContainer>
+</MudPaper>
+
+
+@code {
+    private MudTheme Theme = new MudTheme();
+
+     private void ItemUpdated(MudItemDropInfo<DropItem> dropItem)
+    {
+        dropItem.Item.Place = dropItem.DropzoneIdentifier;
+    }
+    
+    private List<DropItem> _items = new()
+    {
+        new DropItem(){ Name = "Having Sex", Type = ItemType.ThirdDate, Place = "Romance" },
+        new DropItem(){ Name = "Kissing", Type = ItemType.FirstDate, Place = "Romance" },
+        new DropItem(){ Name = "Holding Hands", Type = ItemType.FirstDate, Place = "Romance" },
+        new DropItem(){ Name = "Netflix and Chill", Type = ItemType.SecondDate, Place = "Romance" },
+        new DropItem(){ Name = "Going to a movie", Type = ItemType.SecondDate, Place = "Romance" },
+        new DropItem(){ Name = "Meet at your place", Type = ItemType.SecondDate, Place = "Romance" },
+        new DropItem(){ Name = "Ordering food", Type = ItemType.FirstDate, Place = "Romance" },
+        new DropItem(){ Name = "Going to museum or arcade", Type = ItemType.FirstDate, Place = "Romance" },
+        new DropItem(){ Name = "Going to park", Type = ItemType.SecondDate, Place = "Romance" },
+        new DropItem(){ Name = "Intimate Touching", Type = ItemType.ThirdDate, Place = "Romance" },
+        new DropItem(){ Name = "Sleeping together", Type = ItemType.ThirdDate, Place = "Romance" },
+        new DropItem(){ Name = "Honest conversation sexual history", Type = ItemType.ThirdDate, Place = "Romance" }
+    };
+    
+    public class DropItem
+    {
+        public string Name { get; set; }
+        public ItemType Type { get; set; }
+        public string Place { get; set; }
+    }
+
+    public enum ItemType
+    {
+        FirstDate,
+        SecondDate,
+        ThirdDate
+    }
+}

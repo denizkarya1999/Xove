@@ -1,0 +1,45 @@
+﻿@page "/addpartner"
+@using MediatR
+@using Xove.Shared
+@using Xove.Shared.Features.Partners
+@using Xove.Web.Helpers
+@inject IMediator _mediator
+@inject NavigationManager _navigationManager
+
+@if (_isProcessing)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+<MudPaper Elevation="25" Class="pa-4">
+    <PartnerForm OnSubmit="Submit" OnCancel="NavigateToList" CommandResponse="_commandResponse" IsProcessing="_isProcessing"></PartnerForm>
+</MudPaper>
+
+@code {
+
+    private bool _isProcessing = false;
+    private CommandResponse _commandResponse;
+
+    private async Task Submit(PartnerFormModel partner)
+    {
+        _isProcessing = true;
+        StateHasChanged();
+
+        _commandResponse = await _mediator.Send(new AddPartnerRequest(partner));
+
+        _isProcessing = false;
+
+        if (_commandResponse.IsSuccessful)
+        {
+            NavigateToList();
+        }
+        else
+        {
+            StateHasChanged();
+        }
+    }
+
+    private void NavigateToList()
+    {
+        _navigationManager.NavigateTo("/");
+    }
+}

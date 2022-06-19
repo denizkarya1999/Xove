@@ -1,0 +1,63 @@
+﻿@page "/"
+@using MediatR
+@using Xove.Web.Helpers
+@using Xove.Web
+@using Xove.Shared
+@using Xove.Shared.Features.Partners
+@inject IMediator _mediator
+@inject NavigationManager _navigationManager
+@inject ISnackbar Snackbar
+
+<MudPaper Elevation="10" Class="pa-4 mt-3" >
+    <div style="width:600px">
+        <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.Add" OnClick="AddPartner"/>
+    </div>
+
+    @if (_partners == null)
+    {
+        <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="pa-4 mt-3" />
+    }
+    else
+    {
+        <MudTable Items="@_partners" Hover="true" SortLabel="Sort By" Dense="true" Class="pa-4 mt-3">
+            <HeaderContent>
+                <MudTh></MudTh>
+                <MudTh>Name</MudTh>
+                <MudTh>Age</MudTh>
+                <MudTh>Gender</MudTh>
+                <MudTh>Sexual Orientation</MudTh>
+                <MudTh>Current Position</MudTh>
+                <MudTh>Location</MudTh>
+                <MudTh>Interests and Hobbies</MudTh>
+                <MudTh>Biography</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudAvatar Size="Size.Small" Color="Color.Primary">@context.FullName.Substring(0, 1)</MudAvatar>
+                <MudTd DataLabel="Name">
+                    <MudLink Typo="Typo.body2" Href="@($"/viewpartner/{context.Id}")"> @context.FullName</MudLink>
+                </MudTd>
+                <MudTd DataLabel="Age">@context.Age</MudTd>
+                <MudTd DataLabel="Gender">@context.Gender</MudTd>
+                <MudTd DataLabel="Sexual Orientation">@context.SexualOrientation</MudTd>
+                <MudTd DataLabel="Current Position">@context.CurrentPosition</MudTd>
+                <MudTd DataLabel="Location">@context.Location</MudTd>
+                <MudTd DataLabel="Interests and Hobbies">@context.Interests</MudTd>
+                <MudTd DataLabel="Biography">@context.ShortBiography</MudTd>
+            </RowTemplate>
+        </MudTable>
+    }
+</MudPaper>
+
+@code {
+    private IEnumerable<ListPartnerDto> _partners;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _partners = (await _mediator.Send(new ListPartnerRequest())).Partners;
+    }
+
+    private void AddPartner()
+    {
+        _navigationManager.NavigateTo("/addpartner");
+    }
+}

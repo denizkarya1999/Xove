@@ -1,0 +1,248 @@
+﻿@page "/securitycenter"
+@inject NavigationManager _navigationManager
+
+<MudCard Outlined="true" Class="pa-4 mb-3">
+    <MudAlert Severity="Severity.Warning" Variant="Variant.Filled"><strong>Warning: </strong>Monkeypox Outbreak</MudAlert>
+    <MudCardContent>
+        <MudList Typo="Typo.body2">There is a small but ongoing outbreak of Monkeypox in the US, UK and Europe among gay & bi men. We would like to share this message with you.</MudList>
+        <MudList Typo="Typo.body2">- Don’t panic. As of now, there are very few cases of monkeypox, but knowing this information could help prevent you from getting or spreading the virus.</MudList>
+        <MudList Typo="Typo.body2">- Monkeypox is spread through close contact, including through respiratory droplets (kissing, coughing, sneezing), skin-to-skin contact, or sharing things like bedding or towels.</MudList>
+        <MudList Typo="Typo.body2">- If you or any recent partners (from the last 21 days) have unusual sores or a rash, go see a healthcare provider, either at a clinic or your primary care doctor. Remind your provider that monkeypox is circulating.</MudList>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="MonkeypoxPage">Learn More</MudButton>
+    </MudCardActions>
+</MudCard>
+
+<MudPaper Class="pa-4 mb-3" Style="@($"color:{Theme.Palette.White}; background:{Theme.Palette.Success};")" Outlined="true">
+    <MudText>Safety Tips</MudText>
+    <MudExpansionPanels MultiExpansion="true" Class="pa-4 mb-3">
+    <MudExpansionPanel Text="Don’t post a picture of your face">
+        Try using a picture that represents you in a different way like one related to your hobbies or personality.
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Only meet friends of friends">
+        Before you meet someone, you may want to verify that they are real people with another trusted friend or friend-of-a-friend.
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Meet by Skype or in a safe location first">
+        Sharing your home address can be risky. Instead, get to know someone better by meeting them at a café or 
+        have a talk on Skype.
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Let a friend know where you’re meeting just in case">
+        It’s always a good idea to have people who know where you’ve gone and any emergency contact information you can provide.
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="If you get arrested, never ever confess or admit to anything">
+        Even if they have proof, staying silent is your best bet.
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="When first meeting someone, take as little with you as you can">
+        Don't take your credit and ATM cards only identification documents you plan to use.
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Get tested regularly for HIV and other STIs">
+        Do it at least three times per year, and always have conversations with the guys you meet about your safety expectations.
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="If something does go wrong, go to a human rights or LGBTQ organization for help (For LGBTQIA+ Individuals)">
+        Find out about places in your area that provides direct legal services like an LGBTQ organization or a more general 
+        human rights organization.
+    </MudExpansionPanel>
+</MudExpansionPanels>
+</MudPaper>
+
+
+<MudPaper Class="pa-4 mb-3" Style="@($"color:{Theme.Palette.White}; background:{Theme.Palette.Error};")" Outlined="true">
+    <MudText>STD Risk Chart</MudText>
+    <MudExpansionPanels MultiExpansion="true" Class="pa-4 mb-3">
+    <MudExpansionPanel Text="Kissing">
+        <li>Herpes Simplex</li>
+        <li>HPV (Rare)</li>
+        <li>Gonorrhea (Rare)</li>
+        <li>Syphilis (Rare)</li>
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Sexual Touching">
+        <li>Herpes Simplex (Rare)</li>
+        <li>HPV (Rare)</li>
+        <li>Syphilis (Rare)</li>
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Genital to Genital Rubbing">
+        <li>Herpes Simplex</li>
+        <li>HPV</li>
+        <li>Syphilis</li>
+        <li>Gonorrhea (Rare)</li>
+        <li>Chlamydia (Rare)</li>
+        <li>HIV/AIDS (Rare)</li>
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Oral Sex">
+        <li>Herpes Simplex</li>
+        <li>HPV</li>
+        <li>Syphilis</li>
+        <li>Gonorrhea</li>
+        <li>Chlamydia</li>
+        <li>Hepatitis B (Rare)</li>
+        <li>HIV/AIDS (Rare)</li>
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Vaginal Sex">
+        <li>Herpes Simplex</li>
+        <li>HPV</li>
+        <li>Syphilis</li>
+        <li>Gonorrhea</li>
+        <li>Chlamydia</li>
+        <li>Hepatitis B</li>
+        <li>HIV/AIDS</li>
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Anal Sex">
+        <li>Herpes Simplex</li>
+        <li>HPV</li>
+        <li>Syphilis</li>
+        <li>Gonorrhea</li>
+        <li>Chlamydia</li>
+        <li>Hepatitis B</li>
+        <li>HIV/AIDS</li>
+    </MudExpansionPanel>
+</MudExpansionPanels>
+</MudPaper>
+
+<MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true" Color="@Color.Secondary" PanelClass="pa-5 mt-3 mb-3">
+    <MudTabPanel Text="Victim Connect">
+        <MudText>The VictimConnect - Crime Victim Resource Center</MudText>
+        <MudText><strong>1-855-484-2846</strong></MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="VictimConnect">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="RAINN">
+        <MudText>RAINN`s National Sexual Assault Hotline</MudText>
+        <MudText><strong>1-800-656-4673</strong></MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="Rainn">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="BEAM">
+        <MudText>Black Emotional and Mental Health Collective</MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="Beam">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="Planned Parenthood">
+        <MudText><strong>1-800-230-7526</strong></MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="PP">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="NHTH">
+        <MudText> "National Human Traficking Hotline"</MudText>
+        <MudText><strong>1-888-373-7888</strong></MudText>
+        <MudText>Text <strong>233733</strong></MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="NHTH">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="NSVRC">
+        <MudText>National Sexual Violence Resource Hotline</MudText>
+        <MudText><strong>1-877-739-3895</strong></MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="NSVRC">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="NCMEC">
+        <MudText>National Center for Missing and Exploited Children</MudText>
+        <MudText><strong>1-800-843-5678</strong></MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="NCMEC">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="Cyber Civil Rights Initiative">
+        <MudText><strong>1-844-878-2274</strong></MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="Cyber">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="FBI">
+        <MudText>FBI Internet Crime Complaint Center</MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="FBI">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="LGBT">
+        <MudText>LGBT National Help Center</MudText>
+        <MudText><strong>1-888-843-4564</strong></MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="LGBT">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="Trans Lifeline">
+        <MudText><strong>1-877-565-8860</strong></MudText>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="Trans">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="It`s On Us">
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="On">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="Crisis Text Line">
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="Crisis">Visit Website</MudButton>
+    </MudTabPanel>
+    <MudTabPanel Text="Building Healthy Online Communities">
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="Healthy">Visit Website</MudButton>
+    </MudTabPanel>
+
+</MudTabs>
+
+@code {
+    private MudTheme Theme = new MudTheme();
+
+        private void MonkeypoxPage()
+    {
+        _navigationManager.NavigateTo("https://www.cdc.gov/poxvirus/monkeypox/response/2022/index.html");
+    }
+
+     private void VictimConnect()
+    {
+        _navigationManager.NavigateTo("https://victimconnect.org/#:~:text=GET%20HELP,%2D2846)%20or%20chat%20online.");
+    }
+
+    private void Rainn()
+    {
+        _navigationManager.NavigateTo("https://www.rainn.org/resources");
+    }
+
+    private void Beam()
+    {
+        _navigationManager.NavigateTo("https://beam.community/");
+    }
+
+    private void PP()
+    {
+        _navigationManager.NavigateTo("https://www.plannedparenthood.org/");
+    }
+
+    private void NDVH()
+    {
+        _navigationManager.NavigateTo("https://www.thehotline.org/");
+    }
+
+    private void NHTH()
+    {
+        _navigationManager.NavigateTo("https://humantraffickinghotline.org/");
+    }
+
+    private void NSVRC()
+    {
+        _navigationManager.NavigateTo("https://www.nsvrc.org/");
+    }
+
+    private void NCMEC()
+    {
+        _navigationManager.NavigateTo("https://www.missingkids.org/HOME");
+    }
+
+    private void Cyber()
+    {
+        _navigationManager.NavigateTo("https://cybercivilrights.org/");
+    }
+
+    private void FBI()
+    {
+        _navigationManager.NavigateTo("https://www.ic3.gov/");
+    }
+
+    private void LGBT()
+    {
+        _navigationManager.NavigateTo("http://www.glbthotline.org/");
+    }
+
+    private void Trans()
+    {
+        _navigationManager.NavigateTo("https://translifeline.org/");
+    }
+
+    private void On()
+    {
+        _navigationManager.NavigateTo("https://www.itsonus.org/");
+    }
+
+    private void Crisis()
+    {
+        _navigationManager.NavigateTo("https://www.crisistextline.org/");
+    }
+
+    private void Healthy()
+    {
+        _navigationManager.NavigateTo("https://bhocpartners.org/");
+    }
+}
