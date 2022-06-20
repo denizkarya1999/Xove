@@ -1,4 +1,5 @@
-﻿@page "/"
+﻿@page "/partners"
+@page "/"
 @using MediatR
 @using Xove.Web.Helpers
 @using Xove.Web
@@ -7,6 +8,39 @@
 @inject IMediator _mediator
 @inject NavigationManager _navigationManager
 @inject ISnackbar Snackbar
+
+<MudCarousel Class="mud-width-full" Style="height:200px;" ShowArrows="@arrows" ShowBullets="@bullets" AutoCycle="@autocycle" TData="object">
+    <MudCarouselItem Transition="transition" Style="@($"color:{Colors.Grey.Lighten5}; background:{Colors.Red.Default};")">
+        <div class="d-flex" style="height:100%">
+            <MudIcon Class="mx-auto my-auto" Icon="@Icons.Filled.LocalCafe" Size="@Size.Large" />
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Style="@($"color:{Colors.Grey.Lighten5}; background:{Colors.Orange.Default};")">
+        <div class="d-flex" style="height:100%">
+            <MudIcon Class="mx-auto my-auto" Icon="@Icons.Filled.LocalBar" Size="@Size.Large" />
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Style="@($"color:{Colors.Grey.Darken1}; background:{Colors.Yellow.Default};")">
+        <div class="d-flex" style="height:100%">
+            <MudIcon Class="mx-auto my-auto" Icon="@Icons.Filled.LocalFlorist" Size="@Size.Large" />
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Style="@($"color:{Colors.Grey.Lighten5}; background:{Colors.Green.Default};")">
+        <div class="d-flex" style="height:100%">
+            <MudIcon Class="mx-auto my-auto" Icon="@Icons.Filled.LocalActivity" Size="@Size.Large" />
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Style="@($"color:{Colors.Grey.Lighten5}; background:{Colors.Blue.Darken1};")">
+        <div class="d-flex" style="height:100%">
+            <MudIcon Class="mx-auto my-auto" Icon="@Icons.Filled.Message" Size="@Size.Large" />
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Style="@($"color:{Colors.Grey.Lighten5}; background:{Colors.Purple.Darken1};")">
+        <div class="d-flex" style="height:100%">
+            <MudIcon Class="mx-auto my-auto" Icon="@Icons.Filled.LocalMovies" Size="@Size.Large" />
+        </div>
+    </MudCarouselItem>
+</MudCarousel>
 
 <MudPaper Elevation="10" Class="pa-4 mt-3" >
     <div style="width:600px">
@@ -49,6 +83,11 @@
 </MudPaper>
 
 @code {
+    private bool arrows = true;
+    private bool bullets = true;
+    private bool autocycle = true;
+    private Transition transition = Transition.Slide;
+
     private IEnumerable<ListPartnerDto> _partners;
 
     protected override async Task OnInitializedAsync()

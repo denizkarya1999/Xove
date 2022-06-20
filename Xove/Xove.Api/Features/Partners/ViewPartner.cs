@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using RepoDb;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.Data.SqlClient;
 using System;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,8 +12,9 @@ using Xove.Shared.Features.Partners;
 
 namespace Xove.Api.Features.Partners.ViewPartner
 {
-    public class ViewPartner : BaseAsyncEndpoint.WithRequest<Guid>
-        .WithResponse<ViewPartnerRequest.Response>
+    public class ViewPartner : EndpointBaseAsync
+        .WithRequest<Guid>
+        .WithActionResult<ViewPartnerRequest.Response>
     {
         private readonly IConfiguration _configuration;
 

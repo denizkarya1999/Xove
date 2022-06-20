@@ -11,9 +11,9 @@ using Xove.Domain.Models;
 
 namespace Xove.Api.Features.Partners
 {
-    public class AddPartner : BaseAsyncEndpoint
+    public class AddPartner : EndpointBaseAsync
         .WithRequest<AddPartnerRequest>
-        .WithResponse<CommandResponse>
+        .WithActionResult<CommandResponse>
     {
         private readonly AppDbContext _context;
 

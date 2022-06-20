@@ -6,7 +6,6 @@
 @if (_partner != null)
 {
 <EditForm Model="@_partner" OnValidSubmit="HandleSubmitAsync">
-    <FluentValidationValidator />
     <ServerSideValidator @ref="_serverSideValidator" />
     <MudText Typo="Typo.h6">@_transactionMode</MudText>
     <EpiFormLayout>

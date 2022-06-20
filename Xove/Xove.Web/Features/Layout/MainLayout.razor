@@ -10,9 +10,9 @@
 <MudLayout>
     <MudAppBar Color="Color.Primary" Elevation="1" Dense="true">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudAppBarSpacer />
+        <MudSpacer />
         <MudText Align="Align.Center" Typo="Typo.h5"><b>Xove</b></MudText>
-        <MudAppBarSpacer />
+        <MudSpacer />
         <MudIconButton Icon="@Icons.Material.Filled.Info" Color="Color.Inherit" Edge="Edge.End" OnClick="@InfoPage"/>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">

@@ -10,9 +10,9 @@ using Xove.Shared.Features.Partners;
 
 namespace Xove.Api.Features.Partners
 {
-    public class EditPartner : BaseAsyncEndpoint
+    public class EditPartner : EndpointBaseAsync
         .WithRequest<EditPartnerRequest>
-        .WithResponse<CommandResponse>
+        .WithActionResult<CommandResponse>
     {
         private readonly AppDbContext _context;
 

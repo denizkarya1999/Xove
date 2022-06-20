@@ -11,9 +11,9 @@ using System;
 
 namespace Xove.Api.Features.Partners
 {
-    public class DeletePartner : BaseAsyncEndpoint
+    public class DeletePartner : EndpointBaseAsync
         .WithRequest<Guid>
-        .WithResponse<CommandResponse>
+        .WithActionResult<CommandResponse>
     {
         private readonly AppDbContext _context;
 

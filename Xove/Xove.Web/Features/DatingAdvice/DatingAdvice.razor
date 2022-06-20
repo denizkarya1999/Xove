@@ -66,7 +66,7 @@
 </MudPaper>
 
 <MudPaper Class="pa-4 mt-3 mb-3" Outlined="true">
-    <MudText>Third Date Rule Quiz</MudText>
+    <MudText>Three Dates Rule Quiz</MudText>
 <MudDropContainer T="DropItem" Items="_items" ItemsSelector="@((item,dropzone) => item.Place == dropzone)" ItemDropped="ItemUpdated" Class="d-flex flex-column flex-grow-1">
     <ChildContent>
         <div class="d-flex flex-wrap justify-space-between">
@@ -80,6 +80,15 @@
                 <MudText Typo="Typo.button" Class="ma-2">Third Date</MudText>
             </MudDropZone>
         </div>
+        <MudText>Good Guy vs Bad Guy True/False </MudText>
+        <div class="d-flex flex-wrap justify-space-between">
+            <MudDropZone T="DropItem" Identifier="NiceGuy" CanDrop="@((item) => item.Type == ItemType.NiceGuy)" Class="rounded-lg mud-alert-text-success pa-4 ma-4 flex-grow-1">
+                <MudText Typo="Typo.button" Class="ma-2">Nice Guy</MudText>
+            </MudDropZone>
+            <MudDropZone T="DropItem" Identifier="BadGuy" CanDrop="@((item) => item.Type == ItemType.BadGuy)" Class="rounded-lg mud-alert-text-error pa-4 ma-4 flex-grow-1">
+                <MudText Typo="Typo.button" Class="ma-2">Bad Guy</MudText>
+            </MudDropZone>
+            </div>
         <MudDropZone T="DropItem" Identifier="Romance" CanDrop="@((item) => false)" Class="rounded-lg mud-alert-text-normal pa-4 mt-6 mx-4 flex-grow-1 d-flex flex-wrap"/>
     </ChildContent>
     <ItemRenderer>
@@ -87,7 +96,6 @@
     </ItemRenderer>
 </MudDropContainer>
 </MudPaper>
-
 
 @code {
     private MudTheme Theme = new MudTheme();
@@ -99,18 +107,28 @@
     
     private List<DropItem> _items = new()
     {
+        new DropItem(){ Name = "Always makes honest conversations with you", Type = ItemType.NiceGuy, Place = "Romance" },
         new DropItem(){ Name = "Having Sex", Type = ItemType.ThirdDate, Place = "Romance" },
+        new DropItem(){ Name = "Holds the door for you and lets you in first", Type = ItemType.NiceGuy, Place = "Romance" },
         new DropItem(){ Name = "Kissing", Type = ItemType.FirstDate, Place = "Romance" },
+        new DropItem(){ Name = "Values you more than everything", Type = ItemType.NiceGuy, Place = "Romance" },
         new DropItem(){ Name = "Holding Hands", Type = ItemType.FirstDate, Place = "Romance" },
+        new DropItem(){ Name = "Delays response to messages intentionally", Type = ItemType.BadGuy, Place = "Romance" },
         new DropItem(){ Name = "Netflix and Chill", Type = ItemType.SecondDate, Place = "Romance" },
         new DropItem(){ Name = "Going to a movie", Type = ItemType.SecondDate, Place = "Romance" },
+        new DropItem(){ Name = "Frequently uploads photos with other girls/guys", Type = ItemType.BadGuy, Place = "Romance" },
         new DropItem(){ Name = "Meet at your place", Type = ItemType.SecondDate, Place = "Romance" },
+        new DropItem(){ Name = "Slaps you on your face for not making him a good meal", Type = ItemType.BadGuy, Place = "Romance" },
         new DropItem(){ Name = "Ordering food", Type = ItemType.FirstDate, Place = "Romance" },
+        new DropItem(){ Name = "Is very kind and always asks you how you feel", Type = ItemType.NiceGuy, Place = "Romance" },
         new DropItem(){ Name = "Going to museum or arcade", Type = ItemType.FirstDate, Place = "Romance" },
+        new DropItem(){ Name = "Makes stories to hide things from you", Type = ItemType.BadGuy, Place = "Romance" },
         new DropItem(){ Name = "Going to park", Type = ItemType.SecondDate, Place = "Romance" },
         new DropItem(){ Name = "Intimate Touching", Type = ItemType.ThirdDate, Place = "Romance" },
+        new DropItem(){ Name = "Tries to be intimate with you without your consent", Type = ItemType.BadGuy, Place = "Romance" },
         new DropItem(){ Name = "Sleeping together", Type = ItemType.ThirdDate, Place = "Romance" },
-        new DropItem(){ Name = "Honest conversation sexual history", Type = ItemType.ThirdDate, Place = "Romance" }
+        new DropItem(){ Name = "Honest conversation sexual history", Type = ItemType.ThirdDate, Place = "Romance" },
+        new DropItem(){ Name = "Prepares you a breakfast and washes the dishes", Type = ItemType.NiceGuy, Place = "Romance" }
     };
     
     public class DropItem
@@ -124,6 +142,8 @@
     {
         FirstDate,
         SecondDate,
-        ThirdDate
+        ThirdDate,
+        NiceGuy,
+        BadGuy
     }
 }
