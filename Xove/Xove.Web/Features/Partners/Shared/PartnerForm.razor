@@ -10,6 +10,25 @@
     <MudText Typo="Typo.h6">@_transactionMode</MudText>
     <EpiFormLayout>
         <EpiFormBody>
+            <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple />
+            <MudFab HtmlTag="label"
+        Color="Color.Primary"
+        Icon="@Icons.Filled.Image"
+        Label="Upload Profile Picture"
+        for="fileInput" />
+
+        @if (files != null)
+{
+    <MudList>
+    @foreach (var file in files)
+    {
+     <MudListItem Icon="@Icons.Filled.AttachFile" @key="@file">
+         @file.Name <code>@file.Size bytes</code>
+     </MudListItem>
+    }
+    </MudList>
+}
+
             <MudTextField @bind-Value="_partner.FullName" Label="Full Name" Variant="Variant.Text" Margin="Margin.Normal"
                           For="@(()=> _partner.FullName)"></MudTextField>
             <MudTextField @bind-Value="_partner.Age" Label="Age" Variant="Variant.Text" Margin="Margin.Normal"
@@ -43,6 +62,22 @@
                           For="@(()=> _partner.Interests)"></MudTextField>
             <MudTextField @bind-Value="_partner.ShortBiography" Label="Biography" Variant="Variant.Text" Margin="Margin.Normal"
                           For="@(()=> _partner.ShortBiography)"></MudTextField>
+             
+<MudPaper @ondragenter="@SetDragClass" @ondragleave="@ClearDragClass" @ondragend="@ClearDragClass" Height="300px" Outlined="true" Class="@DragClass">
+    @if (!Clearing)
+    {
+        <InputFile OnChange="OnInputFileChanged" multiple  class="absolute mud-width-full mud-height-full overflow-hidden z-2" style="opacity:0;" />
+    }
+    <MudText Typo="Typo.h6"><MudIcon Icon="@Icons.Material.Filled.Image" Title="Favorite" /> Drag and drop your pictures here or click</MudText>
+    @foreach (var file in fileNames)
+    {
+        <MudChip Color="Color.Dark" Text="@file" />
+    }
+</MudPaper>
+<MudToolBar DisableGutters="true" Class="gap-4">
+    <MudButton OnClick="Upload" Disabled="@(!fileNames.Any())" Color="Color.Primary" Variant="Variant.Filled">Upload</MudButton>
+    <MudButton OnClick="Clear" Disabled="@(!fileNames.Any())" Color="Color.Error" Variant="Variant.Filled">Clear</MudButton>
+</MudToolBar>
         </EpiFormBody>
         <EpiFormActions>
             @if (_isEditing)
@@ -58,6 +93,10 @@
 }
 
 @code {
+    private bool Clearing = false;
+    private static string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full";
+    private string DragClass = DefaultDragClass;
+    private List<string> fileNames = new List<string>();
 
     private ServerSideValidator _serverSideValidator;
     private bool _isEditing = false;
@@ -97,5 +136,50 @@
         {
             _serverSideValidator.DisplayErrors(CommandResponse.Errors);
         }
+    }
+
+    private void OnInputFileChanged(InputFileChangeEventArgs e)
+    {
+        ClearDragClass();
+        var files = e.GetMultipleFiles();
+        foreach(var file in files)
+        {
+            fileNames.Add(file.Name);
+        }
+    }
+
+    private async Task Clear()
+    {
+        Clearing = true;
+        fileNames.Clear();
+        ClearDragClass();
+        await Task.Delay(100);
+        Clearing = false;
+    }
+    private void Upload()
+    {
+        //Upload the files here
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+        Snackbar.Add("This feature will be added in the future", Severity.Warning);
+    }
+
+    private void SetDragClass()
+    {
+        DragClass = $"{DefaultDragClass} mud-border-primary";
+    }
+
+    private void ClearDragClass()
+    {
+        DragClass = DefaultDragClass;
+    }
+
+    IList<IBrowserFile> files = new List<IBrowserFile>();
+    private void UploadFiles(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles())
+        {
+            files.Add(file);
+        }
+        //TODO upload the files to the server
     }
 }

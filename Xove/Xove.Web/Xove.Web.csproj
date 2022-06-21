@@ -24,4 +24,12 @@
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Partners\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\men-love.jpg" />
+  </ItemGroup>
+
 </Project>

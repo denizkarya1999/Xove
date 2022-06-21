@@ -6,8 +6,32 @@
 @inject IDialogService _dialogService
 
 
-<div class="d-flex justify-space-between align-center pa-2">
+<div class="d-flex justify-space-between align-center pa-4">
     <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.ArrowBack" OnClick="NavigateBack" />
+</div>
+<div>
+    <MudCarousel Class="mud-width-full pa-4 mb-6" Style="height:400px;" ShowArrows="@arrows" ShowBullets="@bullets" AutoCycle="@autocycle" TData="object" >
+    <MudCarouselItem Transition="transition" Style="@($"color:{Colors.Grey.Lighten5};")">
+        <div class="d-flex" style="height:100%">
+            <MudImage Fluid="true" Src="men-love.jpg" Class="mx-auto my-auto" Alt="This is a temproary picture"/>
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Style="@($"color:{Colors.Grey.Lighten5};")">
+        <div class="d-flex" style="height:100%">
+            <MudImage Fluid="true" Src="woman-love.jpg" Class="mx-auto my-auto" Alt="This is a temproary picture" />
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Style="@($"color:{Colors.Grey.Lighten5};")">
+        <div class="d-flex" style="height:100%">
+            <MudImage Fluid="true" Src="straight-love.jpg" Class="mx-auto my-auto" Alt="This is a temproary picture"/>
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Style="@($"color:{Colors.Grey.Lighten5};")">
+        <div class="d-flex" style="height:100%">
+            <MudImage Fluid="true" Src="more-love.jpg" Class="mx-auto my-auto" Alt="This is a temproary picture"/>
+        </div>
+    </MudCarouselItem>
+</MudCarousel>
 </div>
 @if (_partner == null)
 {
@@ -48,6 +72,11 @@ else
 }
 
 @code {
+    private bool arrows = true;
+    private bool bullets = true;
+    private bool autocycle = true;
+    private Transition transition = Transition.Slide;
+
     private ViewPartnerDto _partner;
 
     [Parameter] public Guid PartnerId { get; set; }
